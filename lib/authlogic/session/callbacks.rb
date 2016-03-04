@@ -63,7 +63,10 @@ module Authlogic
       
       def self.included(base) #:nodoc:
         base.send :include, ActiveSupport::Callbacks
-        if ActiveSupport::VERSION::STRING >= '4.1'
+        if ActiveSupport::VERSION::STRING >= '5'
+          base.define_callbacks *METHODS + [{:terminator => ->(target, result_lambda){ result_lambda.call == false } }]
+          base.define_callbacks *['persist', {:terminator => ->(target, result_lambda){ result_lambda.call == true } }]
+        elsif ActiveSupport::VERSION::STRING >= '4.1'
           base.define_callbacks *METHODS + [{:terminator => ->(target, result){ result == false } }]
           base.define_callbacks *['persist', {:terminator => ->(target, result){ result == true } }]
         else
