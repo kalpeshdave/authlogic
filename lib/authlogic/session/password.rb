@@ -183,7 +183,6 @@ module Authlogic
             errors.add(password_field, I18n.t('error_messages.password_blank', :default => "cannot be blank")) if send("protected_#{password_field}").blank?
             return if errors.count > 0
 
-            # check for unknown login
             self.attempted_record = search_for_record(find_by_login_method, send(login_field))
             if attempted_record.blank?
               generalize_credentials_error_messages? ?
