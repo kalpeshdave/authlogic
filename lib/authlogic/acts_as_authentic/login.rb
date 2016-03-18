@@ -114,8 +114,7 @@ module Authlogic
         private
           def find_with_case(field, value, sensitivity = true)
             relation = if not sensitivity
-              #connection.case_insensitive_comparison(arel_table, field.to_s, columns_hash[field.to_s], value)
-              arel_table[field.to_s].lower.eq(arel_table.lower(value))
+              connection.case_insensitive_comparison(arel_table, field.to_s, columns_hash[field.to_s], value)
             else
               if Gem::Version.new(Rails.version) < Gem::Version.new('4.2')
                 value = connection.case_sensitive_modifier(value)
@@ -124,7 +123,14 @@ module Authlogic
               end
               relation = arel_table[field.to_s].eq(value)
             end
-            where(relation).first
+            
+            # bind value in rails 5
+            if ActiveSupport::VERSION::STRING >= '5'
+              bind = ActiveRecord::Relation::QueryAttribute.new(field.to_s, value, ActiveRecord::Type::Value.new)
+              where(relation, bind).first
+            else
+              where(relation).first
+            end
           end
       end
 
