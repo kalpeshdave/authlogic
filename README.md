@@ -6,6 +6,9 @@
 [![Build Status](https://travis-ci.org/binarylogic/authlogic.png?branch=master)](https://travis-ci.org/binarylogic/authlogic)
 [![Code Climate](https://codeclimate.com/github/binarylogic/authlogic.png)](https://codeclimate.com/github/binarylogic/authlogic)
 
+
+[![Build Status](https://travis-ci.org/Photovisi/authlogic.svg?branch=master)](https://travis-ci.org/Photovisi/authlogic)
+
 Authlogic is a clean, simple, and unobtrusive ruby authentication solution.
 
 It introduces a new type of model. You can have as many as you want, and name them whatever you want, just like your other models. In this example, we want to authenticate with the User model, which is inferred by the name:
